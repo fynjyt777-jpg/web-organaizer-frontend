@@ -1,0 +1,486 @@
+/* ==========================================
+   БАЗОВЫЕ НАСТРОЙКИ СТРАНИЦЫ
+   ========================================== */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Общая панель для заметок и календаря */
+.main-wrapper {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    max-width: 1600px; /* ИСПРАВЛЕНО: Увеличили общую ширину до 1600px, чтобы дать простор */
+    align-items: flex-start;
+}
+
+/* Календарь */
+.calendar-container {
+    flex-grow: 3;      /* ИСПРАВЛЕНО: Увеличили приоритет растягивания с 1 до 3 */
+    flex-shrink: 1;
+    max-width: 1100px; /* ИСПРАВЛЕНО: Разрешили календарю расширяться до 1100px (было 800px) */
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Боковая панель (основной контейнер заметок) */
+.app-container {
+    flex-grow: 1;
+    width: 650px; /* Увеличили базовую ширину общего контейнера */
+    max-width: 700px; /* Жестко ограничили максимальную ширину, чтобы блок не распирало */
+    min-width: 550px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-sizing: border-box; /* Защита от вылезания внутренних отступов */
+}
+
+/* ==========================================
+   ДВУХКОЛОНОЧНЫЙ МАКЕТ ЗАМЕТОК
+   ========================================== */
+.notes-workspace-layout {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    margin-top: 15px;
+    width: 100%;
+}
+
+/* Левая колонка заметок (Форма + Фильтры) */
+.left-workspace-column {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Правая колонка "Мои заметки" (список уходит наверх вправо) */
+.notes-list-section {
+    flex: 1.2;
+    min-width: 280px;
+    max-width: 380px; /* ИСПРАВЛЕНО: Жесткое ограничение ширины списка заметок */
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    align-self: stretch;
+    box-sizing: border-box; /* Защита внутренних границ */
+    overflow: hidden; /* Обрезает всё, что пытается вылезти */
+}
+
+/* Контейнер списка заметок с автопрокруткой */
+.notes-list {
+    max-height: 520px;
+    overflow-y: auto;
+    overflow-x: hidden; /* ИСПРАВЛЕНО: Запрещаем горизонтальный скролл */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 5px;
+    width: 100%; /* Растягиваем строго по ширине родителя */
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   УПРАВЛЕНИЕ ФОРМОЙ И КНОПКАМИ
+   ========================================== */
+.form-section {
+    margin: 0;
+    width: 100%;
+}
+
+#noteForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#noteForm input[type="text"],
+#noteForm textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+#noteForm textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+#noteForm button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#noteForm button:hover {
+    background-color: #0056b3;
+}
+
+/* Кнопка навигации "Мои заметки" */
+.notes-nav-btn {
+    text-decoration: none;
+    background: #4f46e5;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Кнопка создания папки */
+.addNewFolderBtn {
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Кнопка создания ярлыков */
+.addNewTagBtn {
+    padding: 10px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   ФИЛЬТРЫ И КАТЕГОРИИ (ПАПКИ И ЯРЛЫКИ)
+   ========================================== */
+.folders-filter-section {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 0;
+}
+
+.tags-filter-section {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 0;
+}
+
+.h3-folder-filter, .h3-tags-filter {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 14px;
+}
+
+#tagsFilterContainer, .foldersFilterContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Переключатели (Кнопки фильтров) */
+.filter-tag-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 16px;
+    background-color: #f1f3f4;
+    color: #3c4043;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-tag-btn:hover {
+    background-color: #e8eaed;
+}
+
+.filter-tag-btn.active {
+    background-color: #1a73e8;
+    color: white;
+    border-color: #1a73e8;
+    box-shadow: 0 2px 5px rgba(26,115,232,0.3);
+}
+
+/* Выпадающие меню выбора */
+.labels-contener {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.div-tag, .div2 {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.noteTag, .noteFolder {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+}
+.noteTag { flex-grow: 1; padding: 10px; }
+
+/* ==========================================
+   КАРТОЧКА ОТДЕЛЬНОЙ ЗАМЕТКИ (.note-item)
+   ========================================== */
+/* Стилизация отдельной заметки в списке */
+.note-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%; /* ИСПРАВЛЕНО: Заметка занимает строго 100% ширины списка */
+    box-sizing: border-box; /* КРИТИЧЕСКИ ВАЖНО для Flexbox колонок */
+    background: #fdfdfd;
+    border-left: 4px solid #007bff;
+    border-top: 1px solid #eee;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    border-radius: 0 4px 4px 0;
+    overflow-wrap: break-word; /* ИСПРАВЛЕНО: Переносит длинные слова (например, ссылки) */
+    word-break: break-word;
+}
+
+.label-tags {
+    font-size: 13px;
+    font-weight: bold;
+    color: #444;
+}
+
+#noteTagsCheckboxesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: #fafafa;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.addNewTagBtn {
+    padding: 6px 12px;
+    margin-top: 5px;
+}
+
+.note-date {
+    font-size: 10px;
+    color: #999;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Текст внутри заметки */
+.note-text {
+    margin: 0;
+    font-size: 13px;
+    color: #444;
+    white-space: pre-wrap;
+    max-width: 100%; /* ИСПРАВЛЕНО: Текст не может быть шире карточки */
+    overflow-wrap: break-word; /* Принудительный перенос длинного текста */
+}
+
+/* Бейджи ярлыков внутри карточки */
+.note-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 12px;
+    background-color: #f1f3f4;
+    color: #3c4043;
+    border: 1px solid #e0e0e0;
+}
+
+/* Цвета ярлыков (Keep-стиль) */
+.tag-work { background-color: #e8f0fe; color: #1a73e8; border-color: #d2e3fc; }
+.tag-personal { background-color: #e6f4ea; color: #137333; border-color: #ceead6; }
+.tag-study { background-color: #ffeec2; color: #b06000; border-color: #ffe0b2; }
+.tag-important { background-color: #fce8e6; color: #c5221f; border-color: #fad2cf; }
+
+/* Кнопка удаления заметки (крестик) */
+.delete-note-btn {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    align-self: flex-start;
+}
+.delete-note-btn:hover {
+    color: #dc3545;
+    background-color: #ffeef0;
+}
+
+/* ==========================================
+   КАЛЕНДАРЬ СЕТКА
+   ========================================== */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.calendar-header button {
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 4px;
+}
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 10px;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.day-cell {
+    min-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+}
+.day-number { font-weight: bold; margin-bottom: 5px; color: #333; }
+.day-textarea {
+    width: 100%;
+    flex-grow: 1;
+    border: none;
+    resize: none;
+    background: transparent;
+    font-size: 12px;
+    outline: none;
+}
+.day-textarea:focus { background: #fff8e1; }
+.empty-cell { background: transparent; border: none; }
+
+/* Профиль и Авторизация */
+.user-profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+.logoutBtn {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ==========================================
+   СТРАНИЦА АВТОРИЗАЦИИ И СТРАНИЦА ЗАМЕТОК (ИЗОЛИРОВАННАЯ)
+   ========================================== */
+.auth-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: sans-serif;
+}
+.auth-container input {
+    width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+}
+.auth-container button {
+    width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;
+}
+.auth-container button:hover { background: #0056b3; }
+.toggle-form { margin-top: 15px; font-size: 14px; color: #666; }
+.toggle-form span { color: #007bff; cursor: pointer; text-decoration: underline; }
+
+/* Стили для страницы notes.html (Сайдбар и карточки) */
+.folder-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.folder-item-row:hover { background: #f1f5f9; }
+.folder-item-row.active { background: #e0e7ff; color: #4338ca; font-weight: bold; }
+.folder-actions button {
+    background: none; border: none; color: #94a3b8; cursor: pointer; margin-left: 5px; transition: color 0.2s;
+}
+
+.folder-actions button:hover {
+    color: #ef4444;
+}
+.note-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    position: relative;
+    border: 1px solid #e2e8f0;
+}
+.note-card-badges {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+.note-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+}
+.note-card p {
+    color: #4a5568;
+    font-size: 14px;
+    margin: 0;
+}

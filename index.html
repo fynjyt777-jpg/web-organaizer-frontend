@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Антон Тертичный">
+    <meta name="description" content="Главная страница">
+    <title>Органавизер</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main-wrapper">
+
+    <div class="calendar-container">
+        <div class="user-profile-header">
+            <div>
+                👋 Добро пожаловать, <strong id="current-username">Гость</strong>!
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <a href="notes.html" class="notes-nav-btn">📝 Мои заметки</a>
+                <button id="logoutBtn" class="logoutBtn">Выйти</button>
+            </div>
+        </div>
+
+        <h2>Календарь</h2>
+        <div class="calendar-header">
+            <button id="prev-month">◀</button>
+            <h2 id="month-year-title">Сентябрь 2026</h2>
+            <button id="next-month">▶</button>
+        </div>
+
+        <div class="weekdays">
+            <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+        </div>
+
+        <div id="calendar-grid" class="calendar-grid"></div>
+    </div>
+
+    <!-- Контейнер-обертка для управления внешним видом заметок -->
+    <div class="app-container">
+        <h2>Заметки</h2>
+
+        <!-- Панели выбора параметров создания заметки (Ярлыки и Папки) -->
+        <!-- Панели выбора параметров создания заметки (Ярлыки чекбоксами и Папки) -->
+        <div class="labels-contener">
+
+            <!-- НОВЫЙ БЛОК: Выбор нескольких ярлыков -->
+            <div class="div-tag">
+                <label class="label-tags">Выберите ярлыки (можно несколько):</label>
+                <!-- Сюда JS будет рендерить чекбоксы ярлыков -->
+                <div id="noteTagsCheckboxesContainer">
+                    <!-- Чекбоксы сгенерируются автоматически -->
+                </div>
+                <button type="button" id="addNewTagBtn" class="addNewTagBtn">+ Свой ярлык</button>
+            </div>
+
+            <!-- Селект папки (остается без изменений) -->
+            <div class="div2">
+                <select id="noteFolder" name="folder" class="noteFolder">
+                    <option value="">Без папки (Корень)</option>
+                    <option value="Проекты">📁 Проекты</option>
+                    <option value="Архив">📁 Архив</option>
+                    <option value="Черновики">📁 Черновики</option>
+                </select>
+                <button type="button" id="addNewFolderBtn" class="addNewFolderBtn">+ Новая папка</button>
+            </div>
+        </div>
+
+        <!-- ========================================================== -->
+        <!-- ГЛАВНЫЙ ДВУХКОЛОНОЧНЫЙ МАКЕТ СЕКЦИИ ЗАМЕТОК -->
+        <!-- ========================================================== -->
+        <div class="notes-workspace-layout">
+
+            <!-- ЛЕВАЯ КОЛОНКА: Форма и фильтры -->
+            <div class="left-workspace-column">
+
+                <!-- 1. Форма для внесения заметок -->
+                <section class="form-section">
+                    <form id="noteForm">
+                        <input type="text" id="noteTitle" placeholder="Заголовок заметки" required>
+                        <textarea id="noteContent" placeholder="Текст заметки..." required></textarea>
+                        <button type="submit">Создать заметку</button>
+                    </form>
+                </section>
+
+                <!-- 2. Блок сообщений перемещен прямо под форму -->
+                <div id="message"></div>
+
+                <!-- 3. Блок фильтрации по ПАПКАМ -->
+                <div class="folders-filter-section">
+                    <h3 class="h3-folder-filter">Выбрать папку:</h3>
+                    <div id="foldersFilterContainer" class="foldersFilterContainer"></div>
+                </div>
+
+                <!-- 4. Панель фильтрации по ярлыкам -->
+                <div class="tags-filter-section">
+                    <h3 class="h3-tags-filter">Фильтр по ярлыкам в этой папке:</h3>
+                    <div id="tagsFilterContainer"></div>
+                </div>
+            </div>
+
+            <!-- ПРАВАЯ КОЛОНКА: Блок "Мои заметки" справа вверху -->
+            <section class="notes-list-section">
+                <h3>Мои заметки</h3>
+                <div class="notes-list" id="notes-list">
+                    <!-- Сюда JavaScript будет добавлять заметки -->
+                </div>
+            </section>
+
+        </div>
+        <!-- ========================================================== -->
+
+    </div>
+</div>
+
+<script src="scriptCalendar.js"></script>
+<script src="scriptNotes.js" defer></script>
+</body>
+</html>
